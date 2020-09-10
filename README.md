@@ -1,9 +1,9 @@
 # LLVM Primer
 This article provides basic information about LLVM especially,
-- Students who take courses of [ProSys Lab](prosys.kaist.ac.kr) and to homework using LLVM
+- Students who take courses of [ProSys Lab](prosys.kaist.ac.kr) and do homework using LLVM
 - OCaml programmers who want to use [LLVM OCaml Binding](https://llvm.moe/ocaml/index.html)
 
-## 1. Installation
+## Installation
 Make sure you have the correct version of Clang/LLVM installed in the system.
 ```
 clang --version
@@ -23,7 +23,7 @@ The [LLVM OCaml Binding](https://llvm.moe/ocaml/index.html) will be installed wi
 opam install llvm.9.0.0
 ```
 
-## 2. Generating LLVM IR with Debug Information
+## Generating LLVM IR with Debug Information
 LLVM IR can be generated from C source code using [clang](https://clang.llvm.org), a C language family front-end for LLVM.
 For example, you can generate LLVM IR files for the example C programs under `test` with the following commands:
 ```
@@ -52,7 +52,55 @@ before (`example1.tmp.ll`) and after (`example1.ll`) the optimization and see ho
 Note that if you do not specify `-Xclang -disable-O0-optnone` in the first step, the `-mem2reg`
 optimization pass is not performed.
 
-## 3. LLVM Data Structure and APIs
+## Working with LLVM PHI Nodes
+For optimization purposes, compilers often implement their intermediate representation in 
+static single assignment (SSA) form and LLVM IR is no different. In SSA form, a variable is assigned and 
+updated at exactly one code point. If a variable in the source code has multiple assignments,
+these assignments are split into separate variables in the LLVM IR and then merged back together.
+We call this merge point a **phi node**. 
+
+To illustrate phi nodes, consider the following code:
+```c
+int f() {
+  int y = input();
+  int x = 0;
+  if (y < 1) {
+    x++;
+  } else {
+    x--;
+  }
+  return x;
+}
+```
+```llvm
+entry:
+  %call = call i32 (...) @input()
+  %cmp = icmp slt i32 %call, 1
+  br i1 %cmp, label %then, label %else
+
+then:                             ; preds = %entry
+  %inc = add nsw i32 0, 1
+  br label %if.end
+
+else:                             ; preds = %entry
+  %dec = add nsw i32 0, -1
+  br label %end
+
+end:                        ; preds = %else, %then
+  %x = phi i32 [ %inc, %then ], [ %dec, %else ]
+  ret i32 %x
+}
+```
+
+Depending on the value of `y`, we either take the left branch and execute `x++`, or the right branch and execute `x--`.
+In the corresponding LLVM IR, this update on `x` is split into two variables `%inc` and `%dec`. `%x` is assigned
+after the branch executes with the `phi` instruction; abstractly, `phi i32 [ %inc, %then ], [ %dec, %else ]` says
+assign `%inc` to `%x` if the then branch is taken, or `%dec` to `%x` if the else branch was taken.
+
+Notice that all phi nodes must be at the top of a block. Therefore, you should be very careful when you change LLVM IR code
+not to violate this invariant.
+
+## LLVM Data Structure and APIs
 You will mainly use API functions in the [Llvm module](https://llvm.moe/ocaml/Llvm.html).
 Here we provide instructions about using LLVM APIs which can be needed for basic usage.
 
@@ -90,3 +138,7 @@ API function `instr_begin` returns the first position of a given basic block
 and `instr_succ` returns the next position of a given instruction.
 A position is either "before an instruction" or "at the end of block".
 
+## References
+- [OCaml Standard Library](http://caml.inria.fr/pub/docs/manual-ocaml/libref)
+- [LLVM OCaml Binding](https://llvm.moe/ocaml/Llvm.html)
+- [LLVM Language Reference](https://llvm.org/docs/LangRef.html)
