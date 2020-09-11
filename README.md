@@ -52,6 +52,8 @@ before (`example1.tmp.ll`) and after (`example1.ll`) the optimization and see ho
 Note that if you do not specify `-Xclang -disable-O0-optnone` in the first step, the `-mem2reg`
 optimization pass is not performed.
 
+For the details of LLVM IR, see this [document](https://llvm.org/docs/LangRef.html).
+
 ## Working with LLVM PHI Nodes
 For optimization purposes, compilers often implement their intermediate representation in 
 static single assignment (SSA) form and LLVM IR is no different. In SSA form, a variable is assigned and 
