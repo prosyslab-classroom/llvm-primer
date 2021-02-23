@@ -14,13 +14,13 @@ For the details, see the installation document for [Linux](https://apt.llvm.org)
 If you use MacOS and Homebrew, run the following commands:
 ```
 brew update
-brew install llvm@9.0.0
+brew install llvm@10.0.0
 ```
 
 We assumes that users set up the OCaml environment with [OPam](https://opam.ocaml.org). 
 The [LLVM OCaml Binding](https://llvm.moe/ocaml/index.html) will be installed with the following command:
 ```
-opam install llvm.9.0.0
+opam install llvm.10.0.0
 ```
 
 ## Generating LLVM IR with Debug Information
@@ -108,7 +108,7 @@ Here we provide instructions about using LLVM APIs which can be needed for basic
 
 #### (Almost) Everything is llvalue
 In LLVM IR, type `llvalue` is the most important data type.
-Functions, instructions, global variables, constants, and much more are all `llvalue`s.
+Functions, instructions, global variables, constants, and many more are all `llvalue`s.
 You can use API function `classify_value` to classify a given value with a type of `llvalue`.
 The output of the API is a value with a type of [ValueKind.t](https://llvm.moe/ocaml/Llvm.ValueKind.html).
 Because of this structure, some API functions may return `None` when an operation is invalid for a certain  `llvalue`.
