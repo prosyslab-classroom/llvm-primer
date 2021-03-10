@@ -14,11 +14,12 @@ let scan_block (num_all, num_call) blk =
     (num_all, num_call) blk
 
 (* a naive version *)
-let run llm =
-  Llvm.fold_left_functions               (* for each function in the module *)
+let count llm =
+  Llvm.fold_left_functions                     (* for each function in the module *)
     (fun (num_all, num_call) f ->
-      Llvm.fold_left_blocks              (* for each block in the function *)
-        (fun (num_all, num_call) blk -> scan_block (num_all, num_call) blk)  (* scan the block *)
+      Llvm.fold_left_blocks                    (* for each block in the function *)
+        (fun (num_all, num_call) blk ->
+          scan_block (num_all, num_call) blk)  (* scan the block *)
         (num_all, num_call) f)
     (0, 0) llm
 ```
