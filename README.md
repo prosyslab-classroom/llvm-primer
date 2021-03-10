@@ -28,7 +28,7 @@ LLVM IR can be generated from C source code using [clang](https://clang.llvm.org
 For example, you can generate LLVM IR files for the example C programs under `test` with the following commands:
 ```
 cd test
-clang -c -emit-llvm -S -fno-discard-value-names -Xclang -disable-O0-optnone -o exampl1.tmp.ll -g example1.c
+clang -c -emit-llvm -S -fno-discard-value-names -Xclang -disable-O0-optnone -o example1.tmp.ll -g example1.c
 ```
 Each commandline option of `clang` has the following meaning:
 - `-c`: only run preprocess, compile, and assemble steps
