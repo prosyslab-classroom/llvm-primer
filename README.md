@@ -7,7 +7,7 @@ This article provides basic information about LLVM especially for
 1. [Installation](install.md)
 2. [Generating LLVM IR with Debug Information](ir.md)
 3. [Working with LLVM PHI Nodes](phi.md)
-4. [LLVM Data Structure and APIs](data-structure.md)
+4. [LLVM Data Structures and APIs](data-structure.md)
 5. [Example](example.md)
 
 ## References
