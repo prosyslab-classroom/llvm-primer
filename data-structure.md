@@ -35,3 +35,7 @@ A block is a sequence of non-jump instructions.
 API function `instr_begin` returns the first position of a given basic block
 and `instr_succ` returns the next position of a given instruction.
 A position is either "before an instruction" or "at the end of block".
+
+#### Handling `icmp`
+Given an `icmp` instruction, API `icmp_predicate` returns the predicate with a type of
+[Icmp.t](https://llvm.moe/ocaml/Llvm.Icmp.html). 
