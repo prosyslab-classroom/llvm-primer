@@ -14,3 +14,4 @@ This article provides basic information about LLVM especially for
 - [OCaml Standard Library](http://caml.inria.fr/pub/docs/manual-ocaml/libref)
 - [LLVM OCaml Binding](https://llvm.moe/ocaml/Llvm.html)
 - [LLVM Language Reference](https://llvm.org/docs/LangRef.html)
+- [Prosys LLVM Utils](https://prosyslab-classroom.github.io/llvm-utils/)
