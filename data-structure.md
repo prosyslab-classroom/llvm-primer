@@ -5,10 +5,10 @@ Here we provide instructions about using LLVM APIs which can be needed for basic
 #### (Almost) Everything is llvalue
 In LLVM IR, type `llvalue` is the most important data type.
 Functions, instructions, global variables, constants, and many more are all `llvalue`s.
-You can use API function `classify_value` to classify a given value with a type of `llvalue`.
+You can use API function `Llvm.classify_value` to classify a given value with a type of `llvalue`.
 The output of the API is a value with a type of [ValueKind.t](https://llvm.moe/ocaml/Llvm.ValueKind.html).
 Because of this structure, some API functions may return `None` when an operation is invalid for a certain  `llvalue`.
-For example, API function `int64_of_const` returns the corresponding 64bit integer if the `llvalue` actually
+For example, API function `Llvm.int64_of_const` returns the corresponding 64bit integer if the `llvalue` actually
 represents an integer constant in the input program, otherwise `None` (e.g., applying `int64_of_const` to an assignment).
 Notice that `llvalue` is the OCaml counterpart of the [Value](https://llvm.org/doxygen/classllvm_1_1Value.html)
 class of the LLVM source code in C++.
@@ -32,10 +32,10 @@ Notice that the first operand of `%inc = add nsw i32 %x, 1` is variable `%x` tha
 
 #### Instructions within a Block
 A block is a sequence of non-jump instructions.
-API function `instr_begin` returns the first position of a given basic block
-and `instr_succ` returns the next position of a given instruction.
+API function `Llvm.instr_begin` returns the first position of a given basic block
+and `Llvm.instr_succ` returns the next position of a given instruction.
 A position is either "before an instruction" or "at the end of block".
 
 #### Handling `icmp`
-Given an `icmp` instruction, API `icmp_predicate` returns the predicate with a type of
+Given an `icmp` instruction, API `Llvm.icmp_predicate` returns the predicate with a type of
 [Icmp.t](https://llvm.moe/ocaml/Llvm.Icmp.html). 
