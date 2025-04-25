@@ -1,6 +1,6 @@
 # LLVM Primer
-This article provides basic information about LLVM especially for
-- Students who take courses of [ProSys Lab](https://prosys.kaist.ac.kr) and do homework using LLVM
+This article provides basic information about LLVM, especially for
+- Students who take courses of [Prosys Lab](https://prosys.kaist.ac.kr) and do homework using LLVM
 - OCaml programmers who want to use [LLVM OCaml Binding](https://llvm.moe/ocaml/index.html)
 
 ## Instructions
